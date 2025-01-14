@@ -1,0 +1,6 @@
+@DattingApp_HostAddress = http://localhost:5056
+
+GET {{DattingApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
