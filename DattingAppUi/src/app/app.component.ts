@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
+import { AccountService } from './_services/account.service';
 
 
 @Component({
@@ -10,14 +11,18 @@ import { Component, inject, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   http = inject(HttpClient);
+  private accountService = inject(AccountService);
   title = 'DattingApp';
-  users: any;
+
 
   ngOnInit(): void {
-    this.http.get('https://localhost:5001/api/users').subscribe({
-      next: response => this.users = response,
-      error: error => console.log(error),
-      complete: () => console.log("Request completed")
-    })
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
+    const user = JSON.parse(userString);
+    this.accountService.currentUser.set(user);
   }
 }
