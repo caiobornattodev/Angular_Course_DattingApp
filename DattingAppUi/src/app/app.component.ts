@@ -10,9 +10,9 @@ import { AccountService } from './_services/account.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  http = inject(HttpClient);
+  public http = inject(HttpClient);
   private accountService = inject(AccountService);
-  title = 'DattingApp';
+  public title = 'DattingApp';
 
 
   ngOnInit(): void {
