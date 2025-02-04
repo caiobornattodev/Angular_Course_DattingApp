@@ -21,6 +21,10 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
 import { errorInterceptor } from './_interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { jwtInterceptor } from './_interceptors/jwt.interceptor';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { GalleryModule } from 'ng-gallery';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     ListsComponent,
     TestErrorsComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
@@ -43,10 +48,12 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     NgIf,
     BsDropdownModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    TabsModule,
+    GalleryModule
   ],
   providers: [
-    provideHttpClient(withInterceptors([errorInterceptor])),
+    provideHttpClient(withInterceptors([errorInterceptor, jwtInterceptor])),
     provideAnimations(),
     provideToastr({
       positionClass : 'toast-bottom-right'

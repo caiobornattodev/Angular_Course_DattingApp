@@ -1,21 +1,19 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component , inject} from '@angular/core';
+import { AccountService } from '../_services/account.service';
+
 
 @Component({
   selector: 'app-home',
   standalone: false,
-  
+
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent  {
+  private acountService = inject(AccountService);
+  currentUser = this.acountService.currentUser;
   registerMode = false;
-  http = inject(HttpClient);
   users: any = {}
-
-  ngOnInit(): void {
-    this.getUsers();
-  }
 
   registerToogle() {
     this.registerMode = !this.registerMode;
@@ -23,13 +21,5 @@ export class HomeComponent implements OnInit {
 
   cancelRegisterMode(event: boolean) {
     this.registerMode = event;
-  }
-
-  getUsers() {
-    this.http.get('https://localhost:5001/api/users').subscribe({
-      next: response => this.users = response,
-      error: error => console.log(error),
-      complete: () => console.log("Request completed")
-    });
   }
 }
