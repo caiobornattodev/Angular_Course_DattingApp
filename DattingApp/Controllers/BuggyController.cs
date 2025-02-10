@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DattingAppApi.Controllers
 {
+    //This controller returns errors for testing 
     public class BuggyController(DataContext context) : BaseApiController
     {
         [Authorize]

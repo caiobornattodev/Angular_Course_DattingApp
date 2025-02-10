@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { importProvidersFrom, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,7 +7,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import { provideRouter, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HomeComponent } from './home/home.component';
@@ -25,6 +25,9 @@ import { MemberCardComponent } from './members/member-card/member-card.component
 import { jwtInterceptor } from './_interceptors/jwt.interceptor';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { GalleryModule } from 'ng-gallery';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { NgxSpinnerComponent, NgxSpinnerModule } from 'ngx-spinner';
+import { loadingInterceptor } from './_interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { GalleryModule } from 'ng-gallery';
     TestErrorsComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    MemberCardComponent
+    MemberCardComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,
@@ -50,14 +54,17 @@ import { GalleryModule } from 'ng-gallery';
     RouterLink,
     RouterLinkActive,
     TabsModule,
-    GalleryModule
+    GalleryModule,
+    NgxSpinnerModule,
+    NgxSpinnerComponent
   ],
   providers: [
-    provideHttpClient(withInterceptors([errorInterceptor, jwtInterceptor])),
+    provideHttpClient(withInterceptors([errorInterceptor, jwtInterceptor, loadingInterceptor])),
     provideAnimations(),
     provideToastr({
       positionClass : 'toast-bottom-right'
-    })
+    }),
+    importProvidersFrom(NgxSpinnerModule)
   ],
   bootstrap: [AppComponent]
 })
