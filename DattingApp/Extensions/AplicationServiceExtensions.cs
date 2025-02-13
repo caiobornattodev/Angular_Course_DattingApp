@@ -1,5 +1,6 @@
 ﻿using DattingAppApi.Data;
 using DattingAppApi.Data.Repository;
+using DattingAppApi.Helpers;
 using DattingAppApi.Interfaces;
 using DattingAppApi.Interfaces.Repository;
 using DattingAppApi.Services;
@@ -20,7 +21,9 @@ namespace DattingAppApi.Extensions
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<IPhotoService,PhotoService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.Configure<CloudinarySettinngs>(config.GetSection("CloudinarySettings"));
 
             return services;
         }

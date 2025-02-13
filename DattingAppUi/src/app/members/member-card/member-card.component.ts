@@ -10,5 +10,5 @@ import { Member } from '../../_models/member';
 
 })
 export class MemberCardComponent {
-  @Input() member: Member ;
+  @Input({ required: true }) member: Member;
 }

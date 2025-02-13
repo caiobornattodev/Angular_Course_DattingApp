@@ -8,6 +8,6 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\DattingAppUi\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\assets\" />
+    <Folder Include="src\app\assets\" />
   </ItemGroup>
 </Project>
