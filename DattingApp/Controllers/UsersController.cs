@@ -66,6 +66,8 @@ namespace DattingAppApi.Controllers
                 PublicId = result.PublicId,
             };
 
+            if (user.Photos.Count == 0) photo.IsMainPhoto = true;
+
             user.Photos.Add(photo);
 
             if (await userRepository.SaveAllAsync()) 

@@ -1,11 +1,10 @@
 import { importProvidersFrom, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -29,7 +28,10 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { NgxSpinnerComponent, NgxSpinnerModule } from 'ngx-spinner';
 import { loadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotosEditorComponent } from './members/photos-editor/photos-editor.component';
-import { FileUploadModule } from 'ng2-file-upload'
+import { FileUploadModule } from 'ng2-file-upload';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { DatePickerComponent } from './_forms/date-picker/date-picker.component'
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -47,11 +49,14 @@ import { FileUploadModule } from 'ng2-file-upload'
     ServerErrorComponent,
     MemberCardComponent,
     MemberEditComponent,
-    PhotosEditorComponent
+    PhotosEditorComponent,
+    TextInputComponent,
+    DatePickerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     FormsModule,
     NgIf,
     BsDropdownModule,
@@ -61,7 +66,8 @@ import { FileUploadModule } from 'ng2-file-upload'
     GalleryModule,
     NgxSpinnerModule,
     NgxSpinnerComponent,
-    FileUploadModule
+    FileUploadModule,
+    BsDatepickerModule
   ],
   providers: [
     provideHttpClient(withInterceptors([errorInterceptor, jwtInterceptor, loadingInterceptor])),
