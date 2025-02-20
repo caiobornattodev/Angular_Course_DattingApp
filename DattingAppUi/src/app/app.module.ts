@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -32,7 +32,9 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DatePickerComponent } from './_forms/date-picker/date-picker.component'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
+import { PaginationModule } from 'ngx-bootstrap/pagination'
+import { ButtonsModule } from 'ngx-bootstrap/buttons'
+import { TimeagoModule } from 'ngx-timeago'
 
 @NgModule({
   declarations: [
@@ -67,7 +69,11 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     NgxSpinnerModule,
     NgxSpinnerComponent,
     FileUploadModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    PaginationModule,
+    ButtonsModule,
+    DatePipe,
+    TimeagoModule
   ],
   providers: [
     provideHttpClient(withInterceptors([errorInterceptor, jwtInterceptor, loadingInterceptor])),
@@ -75,7 +81,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     provideToastr({
       positionClass : 'toast-bottom-right'
     }),
-    importProvidersFrom(NgxSpinnerModule)
+    importProvidersFrom(NgxSpinnerModule, TimeagoModule.forRoot())
   ],
   bootstrap: [AppComponent]
 })

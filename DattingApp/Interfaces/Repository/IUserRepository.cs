@@ -1,5 +1,6 @@
 ﻿using DattingAppApi.DTOs;
 using DattingAppApi.Entities;
+using DattingAppApi.Helpers;
 
 namespace DattingAppApi.Interfaces.Repository
 {
@@ -15,7 +16,7 @@ namespace DattingAppApi.Interfaces.Repository
 
         Task<AppUser?> GetUserByUsernameAsync(string username);
 
-        Task<IEnumerable<MemberDto>> GetMembersAsync();
+        Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
 
         Task<MemberDto> GetMemberAsync(string username);
     }

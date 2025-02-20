@@ -47,3 +47,15 @@
 .white-space-nowrap{
    white-space : nowrap
 }
+
+
+/*BTN colors*/
+.btn-onrangered{
+    background-color : orangered;
+    color : white;
+}
+
+.btn-darkcyan {
+  background-color: darkcyan;
+  color: white;
+}
