@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MembersService } from '../../_services/members.service';
-import { AccountService } from '../../_services/account.service';
-import { UserParams } from '../../_models/userParams';
+
 
 @Component({
   selector: 'app-member-list',

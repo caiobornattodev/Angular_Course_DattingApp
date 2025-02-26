@@ -7,6 +7,7 @@ import { Photo } from '../_models/photo';
 import { PaginatedResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
+import { setPaginatedResponse, setPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +30,9 @@ export class MembersService {
   getMembers() {
     const userParams: UserParams = this.userParams();
     const response = this.memberCache.get(Object.values(userParams).join('-'));
-    if (response) return this.setPaginatedResponse(response);
+    if (response) return setPaginatedResponse(response, this.paginatedResult);
 
-    let params = this.setPaginationHeaders(userParams.pageNumber, userParams.pageSize)
+    let params = setPaginationHeaders(userParams.pageNumber, userParams.pageSize)
     params = params.append('minAge', userParams.minAge);
     params = params.append('maxAge', userParams.maxAge);
     params = params.append('gender', userParams.gender);
@@ -39,29 +40,29 @@ export class MembersService {
 
     return this.http.get<Member[]>(this.baseUrl + 'users', { observe: 'response', params }).subscribe({
       next: response => {
-        this.setPaginatedResponse(response);
+        setPaginatedResponse(response, this.paginatedResult);
         this.memberCache.set(Object.values(userParams).join('-'), response);
       }
     });
   }
 
-  private setPaginatedResponse(response: HttpResponse<Member[]>) {
-    this.paginatedResult.set({
-      items: response.body as Member[],
-      pagination: JSON.parse(response.headers.get('Pagination')!)
-    });
-  }
+  //private setPaginatedResponse(response: HttpResponse<Member[]>) {
+  //  this.paginatedResult.set({
+  //    items: response.body as Member[],
+  //    pagination: JSON.parse(response.headers.get('Pagination')!)
+  //  });
+  //}
 
-  private setPaginationHeaders(pageNumber: number, pageSize: number): HttpParams {
-    let params = new HttpParams();
+  //private setPaginationHeaders(pageNumber: number, pageSize: number): HttpParams {
+  //  let params = new HttpParams();
 
-    if (pageNumber && pageSize) {
-      params = params.append('pageNumber', pageNumber);
-      params = params.append('pageSize', pageSize);
-    }
+  //  if (pageNumber && pageSize) {
+  //    params = params.append('pageNumber', pageNumber);
+  //    params = params.append('pageSize', pageSize);
+  //  }
 
-    return params;
-  }
+  //  return params;
+  //}
 
   getMember(username: string) {
     const member: Member = [...this.memberCache.values()]
