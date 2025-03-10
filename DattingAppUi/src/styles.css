@@ -48,6 +48,13 @@
    white-space : nowrap
 }
 
+.cursor-pointer{
+    cursor : pointer;
+}
+
+.cursor-help{
+    cursor : help
+}
 
 /*BTN colors*/
 .btn-onrangered{
