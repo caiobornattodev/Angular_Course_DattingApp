@@ -35,7 +35,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination'
 import { ButtonsModule } from 'ngx-bootstrap/buttons'
 import { TimeagoModule } from 'ngx-timeago';
-import { MemberMessagesComponent } from './members/member-messages/member-messages.component'
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component'
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
     PhotosEditorComponent,
     TextInputComponent,
     DatePickerComponent,
-    MemberMessagesComponent
+    MemberMessagesComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,

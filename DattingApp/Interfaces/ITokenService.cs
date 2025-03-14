@@ -4,6 +4,6 @@ namespace DattingAppApi.Interfaces
 {
     public interface ITokenService
     {
-        public string CreateToken(AppUser user);
+        public Task<string> CreateToken(AppUser user);
     }
 }
