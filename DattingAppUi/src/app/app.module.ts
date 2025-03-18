@@ -36,7 +36,12 @@ import { PaginationModule } from 'ngx-bootstrap/pagination'
 import { ButtonsModule } from 'ngx-bootstrap/buttons'
 import { TimeagoModule } from 'ngx-timeago';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
-import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component'
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { HasRoleDirective } from './_directives/has-role.directive';
+import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component'
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +62,11 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component'
     TextInputComponent,
     DatePickerComponent,
     MemberMessagesComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    HasRoleDirective,
+    PhotoManagementComponent,
+    UserManagementComponent,
+    RolesModalComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +85,7 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component'
     BsDatepickerModule,
     PaginationModule,
     ButtonsModule,
+    ModalModule,
     DatePipe,
     TimeagoModule
   ],
@@ -85,7 +95,7 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component'
     provideToastr({
       positionClass : 'toast-bottom-right'
     }),
-    importProvidersFrom(NgxSpinnerModule, TimeagoModule.forRoot())
+    importProvidersFrom(NgxSpinnerModule, TimeagoModule.forRoot(), ModalModule.forRoot())
   ],
   bootstrap: [AppComponent]
 })
