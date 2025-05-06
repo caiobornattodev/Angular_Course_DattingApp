@@ -23,6 +23,9 @@ namespace DattingAppApi.Helpers
                     o => o.MapFrom(s => s.Sender.Photos.FirstOrDefault(x => x.IsMainPhoto)!.Url))
                 .ForMember(d => d.RecipeintPhotoUrl,
                     o => o.MapFrom(s => s.Sender.Photos.FirstOrDefault(x => x.IsMainPhoto)!.Url));
+
+            CreateMap<DateTime,DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d,DateTimeKind.Utc));
+            CreateMap<DateTime?,DateTime?>().ConvertUsing(d => d.HasValue ?  DateTime.SpecifyKind(d.Value,DateTimeKind.Utc) : null);
         }
     }
 }

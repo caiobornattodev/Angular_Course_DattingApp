@@ -10,6 +10,15 @@ namespace DattingAppApi.Data.Repository
 {
     public class MessageRepository(DataContext context, IMapper mapper) : IMessageRepository
     {
+        public void AddGroup(Group group)
+        {
+            context.Groups.Add(group);
+        }
+        public void RemoveConnection(Connection connection)
+        {
+            context.Connections.Remove(connection);
+        }
+
         public void AddMesage(Message message)
         {
             context.Messages.Add(message);
@@ -43,19 +52,11 @@ namespace DattingAppApi.Data.Repository
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
         {
-            //var messages = context.Messages
-            //    .Where(m => m.Recipient.UserName == currentUsername && m.RecipientDeleted == false && m.Sender.UserName == recipientUsername
-            //                || m.Recipient.UserName == recipientUsername && m.Sender.UserName == currentUsername && m.SenderDeleted == false)
-            //    .OrderBy(m => m.MessageSent)
-            //    .ProjectTo<MessageDto>(mapper.ConfigurationProvider)
-            //    .AsEnumerable();
-
             var messages = await context.Messages
-                           .Include(u => u.Sender).ThenInclude(p => p.Photos)
-                           .Include(u => u.Recipient).ThenInclude(p => p.Photos)
                            .Where(m => m.Recipient.UserName == currentUsername && m.RecipientDeleted == false && m.Sender.UserName == recipientUsername
                                   || m.Recipient.UserName == recipientUsername && m.Sender.UserName == currentUsername && m.SenderDeleted == false)
                            .OrderBy(m => m.MessageSent)
+                           .ProjectTo<MessageDto>(mapper.ConfigurationProvider)
                            .ToListAsync();
 
             var unreadMessages = messages.Where(m => m.DateRead == null && m.RecipientUsername == currentUsername).ToList();
@@ -66,12 +67,31 @@ namespace DattingAppApi.Data.Repository
                 await context.SaveChangesAsync();
             }
 
-            return mapper.Map<IEnumerable<MessageDto>>(messages);
+            return messages;
         }
+
 
         public async Task<bool> SaveAllAsync()
         {
             return await context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<Connection?> GetConnection(string connectionId)
+        {
+           return await context.Connections.FindAsync(connectionId);
+        }
+
+        public async Task<Group?> GetMessageGroup(string groupName)
+        {
+            return await context.Groups.Include(x => x.Connections).FirstOrDefaultAsync(x => x.Name == groupName);
+        }
+
+        public async Task<Group?> GetGroupForConnection(string connectionId)
+        {
+           return await context.Groups
+           .Include(x => x.Connections)
+           .Where(x => x.Connections.Any(c => c.ConnectionId == connectionId))
+           .FirstOrDefaultAsync();
         }
     }
 }

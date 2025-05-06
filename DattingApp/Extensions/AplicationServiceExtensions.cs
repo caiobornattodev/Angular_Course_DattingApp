@@ -4,6 +4,7 @@ using DattingAppApi.Helpers;
 using DattingAppApi.Interfaces;
 using DattingAppApi.Interfaces.Repository;
 using DattingAppApi.Services;
+using DattingAppApi.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace DattingAppApi.Extensions
@@ -27,6 +28,8 @@ namespace DattingAppApi.Extensions
             services.AddScoped<LogUserActivity>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettinngs>(config.GetSection("CloudinarySettings"));
+            services.AddSignalR();
+            services.AddSingleton<PresenceTracker>();
 
             return services;
         }

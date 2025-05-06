@@ -1,30 +1,30 @@
 <div class="card">
     <div class="card-body">
-        @if (messages.length === 0){
-            <p>No messages yet</p>
+        @if (messageService.messageThread().length === 0){
+        <p>No messages yet</p>
         } @else{
-            <ul class="chat">
-                @for (message of messages; track message.id){
-                    <li>
-                        <div>
-                            <span class="chat-img float-end">
-                                <img class="rounded-circle"
-                                     src="{{ message.senderPhotoUrl || 'user.png' }}"
-                                     alt="Image of message sender" />
-                            </span>
-                            <div class="chat-body">
-                                <small class="text-muted">
-                                    <span class="fa fa-clock-o">{{ message.messageSent | timeago }}</span>
-                                    <span *ngIf="!message.dateRead && message.senderUsername !== username" class="text-danger">(unread)</span>
-                                    <span *ngIf="message.dateRead && message.senderUsername !== username"
-                                          class="text-succes">(read {{message.dateRead | timeago }})</span>
-                                </small>
-                                <p>{{ message.content }}</p>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
+        <ul class="chat">
+            @for (message of messageService.messageThread(); track message.id){
+            <li>
+                <div>
+                    <span class="chat-img float-end">
+                        <img class="rounded-circle"
+                             src="{{ message.senderPhotoUrl || 'user.png' }}"
+                             alt="Image of message sender" />
+                    </span>
+                    <div class="chat-body">
+                        <small class="text-muted">
+                            <span class="fa fa-clock-o">{{ message.messageSent | timeago }}</span>
+                            <span *ngIf="!message.dateRead && message.senderUsername !== username" class="text-danger">(unread)</span>
+                            <span *ngIf="message.dateRead && message.senderUsername !== username"
+                                  class="text-succes">(read {{message.dateRead | timeago }})</span>
+                        </small>
+                        <p>{{ message.content }}</p>
+                    </div>
+                </div>
+            </li>
+            }
+        </ul>
         }
     </div>
     <div class="card-footer">
