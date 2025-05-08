@@ -25,6 +25,7 @@ namespace DattingAppApi.Extensions
             services.AddScoped<IPhotoService,PhotoService>();
             services.AddScoped<ILikesRepository,LikesRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddScoped<LogUserActivity>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettinngs>(config.GetSection("CloudinarySettings"));

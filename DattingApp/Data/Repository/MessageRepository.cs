@@ -52,14 +52,14 @@ namespace DattingAppApi.Data.Repository
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
         {
-            var messages = await context.Messages
+            var querry =  context.Messages
                            .Where(m => m.Recipient.UserName == currentUsername && m.RecipientDeleted == false && m.Sender.UserName == recipientUsername
                                   || m.Recipient.UserName == recipientUsername && m.Sender.UserName == currentUsername && m.SenderDeleted == false)
                            .OrderBy(m => m.MessageSent)
                            .ProjectTo<MessageDto>(mapper.ConfigurationProvider)
-                           .ToListAsync();
+                           .AsQueryable();
 
-            var unreadMessages = messages.Where(m => m.DateRead == null && m.RecipientUsername == currentUsername).ToList();
+            var unreadMessages = querry.Where(m => m.DateRead == null && m.RecipientUsername == currentUsername).ToList();
 
             if (unreadMessages.Any())
             {
@@ -67,13 +67,7 @@ namespace DattingAppApi.Data.Repository
                 await context.SaveChangesAsync();
             }
 
-            return messages;
-        }
-
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await context.SaveChangesAsync() > 0;
+            return await querry.ProjectTo<MessageDto>(mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<Connection?> GetConnection(string connectionId)
